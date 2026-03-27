@@ -28,6 +28,20 @@
       border-radius: 1.333vw;
       display: block;
     }
+    .share-code-wrap {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      margin: 5.333vw 0 0;
+      padding: 0 4vw;
+      box-sizing: border-box;
+    }
+    .share-code-wrap img {
+      max-width: min(72vw, 280px);
+      height: auto;
+      display: block;
+    }
   </style>
 </head>
 <body>
@@ -56,6 +70,10 @@
             <p>您可在桌面添加小组件，无需打开应用即可查看待取件码和寄件码。</p>
           </div>
         </main>
+
+        <div class="share-code-wrap" role="img" aria-label="应用分享码">
+          <img src="./share_code.png" alt="智汇取件码分享码，扫一扫" loading="lazy" decoding="async">
+        </div>
 
         <div class="styles_dowbtn__by918" role="button" tabindex="0" aria-label="立即下载应用">
           <span>立即下载</span>
