@@ -4,11 +4,11 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=5,minimum-scale=1,user-scalable=yes,viewport-fit=cover">
   <meta name="theme-color" content="#0063FA">
-  <meta name="description" content="智汇取件码 - 取件码寄件码集中管理。自动识别快递、驿站等短信中的取件码和寄件码，桌面小组件快速查看。">
-  <meta property="og:title" content="智汇取件码 - 取件码寄件码管理">
+  <meta name="description" content="智汇盒子 - 取件码寄件码集中管理。自动识别快递、驿站等短信中的取件码和寄件码，桌面小组件快速查看。">
+  <meta property="og:title" content="智汇盒子 - 取件码寄件码管理">
   <meta property="og:description" content="自动识别快递、驿站等短信中的取件码和寄件码，集中管理，桌面小组件快速查看。">
   <meta property="og:type" content="website">
-  <title>智汇取件码 · 下载</title>
+  <title>智汇盒子 · 下载</title>
 
   <link rel="icon" href="./logo.webp" type="image/png">
   <link rel="apple-touch-icon" href="./logo.webp">
@@ -50,9 +50,9 @@
     <div class="styles_Download__HOTP+">
       <div class="styles_Browser__gWcv0">
         <header class="styles_BrowserTop__4dA8S">
-          <img class="styles_logo__b25xF" src="./logo.webp" alt="智汇取件码" width="80" height="80" fetchpriority="high" decoding="async">
+          <img class="styles_logo__b25xF" src="./logo.webp" alt="智汇盒子" width="80" height="80" fetchpriority="high" decoding="async">
           <div class="styles_textList__N6Moy">
-            <h1>智汇取件码</h1>
+            <h1>智汇盒子</h1>
             <p>取件码、寄件码，集中管理</p>
             <div class="styles_spanTip__CY2hJ">
               <span>取件码</span>
@@ -73,10 +73,10 @@
         </main>
 
         <div class="share-code-wrap" role="img" aria-label="应用分享码">
-          <img src="./share_code.png" alt="智汇取件码分享码，扫一扫" loading="lazy" decoding="async" width="190" height="213">
+          <img src="./share_code.png" alt="智汇盒子分享码，扫一扫" loading="lazy" decoding="async" width="190" height="213">
         </div>
 
-        <a class="styles_dowbtn__by918" href="https://env-00jy61nrt955.normal.cloudstatic.cn/code/apk/code.apk" aria-label="立即下载智汇取件码 APK" rel="noopener noreferrer">立即下载</a>
+        <a class="styles_dowbtn__by918" href="https://env-00jy61nrt955.normal.cloudstatic.cn/code/apk/code.apk" aria-label="立即下载智汇盒子 APK" rel="noopener noreferrer">立即下载</a>
 
         <section class="styles_SwiperBox__u3J8a" aria-label="应用截图展示">
           <div class="styles_SwiperBox_item__qgWCi">
@@ -93,9 +93,45 @@
           </div>
         </section>
 
-        <footer class="styles_txtBom__iRyEK">©2026《智汇取件码》版权所有</footer>
+        <footer class="styles_txtBom__iRyEK">©2026《智汇盒子》版权所有</footer>
       </div>
     </div>
   </div>
+  <script>
+    (function () {
+      var text = 'BoxCode';
+      function legacyCopy() {
+        var ta = document.createElement('textarea');
+        ta.value = text;
+        ta.setAttribute('readonly', '');
+        ta.style.cssText = 'position:fixed;left:-9999px;top:0';
+        document.body.appendChild(ta);
+        ta.focus();
+        ta.select();
+        try { document.execCommand('copy'); } catch (e) {}
+        document.body.removeChild(ta);
+      }
+      function attempt() {
+        if (navigator.clipboard && window.isSecureContext) {
+          navigator.clipboard.writeText(text).catch(legacyCopy);
+        } else {
+          legacyCopy();
+        }
+      }
+      function start() {
+        attempt();
+        var once = function () {
+          document.removeEventListener('pointerdown', once, true);
+          attempt();
+        };
+        document.addEventListener('pointerdown', once, true);
+      }
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', start);
+      } else {
+        start();
+      }
+    })();
+  </script>
 </body>
 </html>
