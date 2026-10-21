@@ -124,71 +124,12 @@
             cursor: grabbing;
         }
 
-        .lightbox-close {
-            position: absolute;
-            top: 14px;
-            right: 14px;
-            z-index: 2;
-            width: 40px;
-            height: 40px;
-            padding: 0;
-            border: none;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.92);
-            color: var(--ink);
-            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.18);
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            -webkit-tap-highlight-color: transparent;
-        }
-
-        .lightbox-close:hover {
-            background: #fff;
-        }
-
-        .lightbox-close svg {
-            width: 18px;
-            height: 18px;
-            display: block;
-        }
-
-        .lightbox-nav {
-            position: absolute;
-            top: 50%;
-            z-index: 2;
-            width: 44px;
-            height: 44px;
-            margin-top: -22px;
-            padding: 0;
-            border: none;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.92);
-            color: var(--ink);
-            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.18);
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            -webkit-tap-highlight-color: transparent;
-        }
-
-        .lightbox-nav:hover { background: #fff; }
-        .lightbox-prev { left: 12px; }
-        .lightbox-next { right: 12px; }
-        .lightbox-nav svg {
-            width: 20px;
-            height: 20px;
-            display: block;
-        }
-
         .lightbox-caption {
             position: absolute;
             left: 0;
             right: 0;
             bottom: 12px;
-            padding: 0 56px;
+            padding: 0 20px;
             color: rgba(255, 255, 255, 0.88);
             font-size: 13px;
             text-align: center;
@@ -199,45 +140,6 @@
         body.lightbox-open {
             overflow: hidden;
         }
-
-        .gallery-nav {
-            position: absolute;
-            top: 50%;
-            z-index: 2;
-            width: 40px;
-            height: 40px;
-            margin-top: -20px;
-            padding: 0;
-            border: none;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.88);
-            box-shadow: 0 4px 16px rgba(26, 31, 46, 0.12);
-            color: var(--ink);
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: background 0.2s ease, transform 0.2s ease, opacity 0.2s ease;
-            -webkit-tap-highlight-color: transparent;
-        }
-
-        .gallery-nav:hover {
-            background: #fff;
-            transform: scale(1.05);
-        }
-
-        .gallery-nav:active {
-            transform: scale(0.96);
-        }
-
-        .gallery-nav svg {
-            width: 18px;
-            height: 18px;
-            display: block;
-        }
-
-        .gallery-prev { left: 12px; }
-        .gallery-next { right: 12px; }
 
         .gallery-dots {
             display: flex;
@@ -587,16 +489,6 @@
                     <img src="images/color_theory_05.webp" alt="邻近色与同类色：60° 与 15° 的微妙差别" loading="lazy" />
                 </figure>
             </div>
-            <button type="button" class="gallery-nav gallery-prev" id="galleryPrev" aria-label="上一张">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                    <polyline points="15 18 9 12 15 6"></polyline>
-                </svg>
-            </button>
-            <button type="button" class="gallery-nav gallery-next" id="galleryNext" aria-label="下一张">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                    <polyline points="9 18 15 12 9 6"></polyline>
-                </svg>
-            </button>
         </section>
 
         <div class="gallery-meta">
@@ -768,23 +660,7 @@
     </div>
 
     <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="图片预览" hidden>
-        <button type="button" class="lightbox-close" id="lightboxClose" aria-label="关闭预览">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true">
-                <line x1="18" y1="6" x2="6" y2="18"></line>
-                <line x1="6" y1="6" x2="18" y2="18"></line>
-            </svg>
-        </button>
-        <button type="button" class="lightbox-nav lightbox-prev" id="lightboxPrev" aria-label="上一张">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                <polyline points="15 18 9 12 15 6"></polyline>
-            </svg>
-        </button>
         <img class="lightbox-img" id="lightboxImg" alt="" />
-        <button type="button" class="lightbox-nav lightbox-next" id="lightboxNext" aria-label="下一张">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                <polyline points="9 18 15 12 9 6"></polyline>
-            </svg>
-        </button>
         <p class="lightbox-caption" id="lightboxCaption"></p>
     </div>
 
@@ -877,34 +753,15 @@
             function next() { goTo(index + 1); }
             function prev() { goTo(index - 1); }
 
-            document.getElementById("galleryPrev").addEventListener("click", function (e) {
-                e.stopPropagation();
-                prev();
-            });
-            document.getElementById("galleryNext").addEventListener("click", function (e) {
-                e.stopPropagation();
-                next();
-            });
-            document.getElementById("lightboxClose").addEventListener("click", closeLightbox);
-            document.getElementById("lightboxPrev").addEventListener("click", function (e) {
-                e.stopPropagation();
-                prev();
-            });
-            document.getElementById("lightboxNext").addEventListener("click", function (e) {
-                e.stopPropagation();
-                next();
-            });
-            lightbox.addEventListener("click", function (e) {
-                if (e.target === lightbox) closeLightbox();
-            });
-
-            // Lightbox swipe
+            // Lightbox swipe / tap-to-close
             var lbStartX = 0;
             var lbDeltaX = 0;
             var lbDragging = false;
+            var lbMoved = false;
 
             function lbOnStart(clientX) {
                 lbDragging = true;
+                lbMoved = false;
                 lbStartX = clientX;
                 lbDeltaX = 0;
                 lightboxImg.classList.add("is-dragging");
@@ -913,29 +770,29 @@
             function lbOnMove(clientX) {
                 if (!lbDragging) return;
                 lbDeltaX = clientX - lbStartX;
+                if (Math.abs(lbDeltaX) > 8) lbMoved = true;
                 lightboxImg.style.transform = "translateX(" + lbDeltaX + "px)";
                 lightboxImg.style.opacity = String(Math.max(0.45, 1 - Math.abs(lbDeltaX) / 420));
             }
 
             function lbOnEnd() {
                 if (!lbDragging) return;
+                var swiped = Math.abs(lbDeltaX) > 56;
+                var tapped = !lbMoved;
                 lbDragging = false;
                 lightboxImg.classList.remove("is-dragging");
                 lightboxImg.style.transform = "";
                 lightboxImg.style.opacity = "";
-                if (Math.abs(lbDeltaX) > 56) {
+                if (swiped) {
                     if (lbDeltaX < 0) next();
                     else prev();
+                } else if (tapped) {
+                    closeLightbox();
                 }
-            }
-
-            function lbIsOnChrome(target) {
-                return !!(target.closest && target.closest(".lightbox-close, .lightbox-nav"));
             }
 
             lightbox.addEventListener("touchstart", function (e) {
                 if (!lightboxOpen || e.touches.length !== 1) return;
-                if (lbIsOnChrome(e.target)) return;
                 lbOnStart(e.touches[0].clientX);
             }, { passive: true });
 
@@ -949,7 +806,6 @@
 
             lightbox.addEventListener("mousedown", function (e) {
                 if (!lightboxOpen || e.button !== 0) return;
-                if (lbIsOnChrome(e.target)) return;
                 e.preventDefault();
                 lbOnStart(e.clientX);
             });
@@ -1001,7 +857,6 @@
 
             gallery.addEventListener("touchstart", function (e) {
                 if (e.touches.length !== 1) return;
-                if (e.target.closest && e.target.closest(".gallery-nav")) return;
                 onStart(e.touches[0].clientX);
             }, { passive: true });
 
@@ -1019,7 +874,6 @@
 
             gallery.addEventListener("mousedown", function (e) {
                 if (e.button !== 0) return;
-                if (e.target.closest && e.target.closest(".gallery-nav")) return;
                 e.preventDefault();
                 onStart(e.clientX);
             });
