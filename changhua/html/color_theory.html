@@ -36,17 +36,262 @@
         .page {
             max-width: 720px;
             margin: 0 auto;
-            padding: 28px 18px 56px;
+            padding: 0 0 56px;
         }
 
-        /* Hero */
+        /* Gallery carousel */
+        .gallery {
+            position: relative;
+            margin: 0 0 8px;
+            background: #f7f8fa;
+            overflow: hidden;
+            user-select: none;
+            -webkit-user-select: none;
+            touch-action: pan-y;
+        }
+
+        .gallery-track {
+            display: flex;
+            width: 100%;
+            transition: transform 0.35s ease;
+            will-change: transform;
+        }
+
+        .gallery-track.dragging {
+            transition: none;
+        }
+
+        .gallery-slide {
+            flex: 0 0 100%;
+            width: 100%;
+            margin: 0;
+            cursor: zoom-in;
+        }
+
+        .gallery-slide img {
+            display: block;
+            width: 100%;
+            height: auto;
+            vertical-align: middle;
+            pointer-events: none;
+            -webkit-user-drag: none;
+        }
+
+        /* Lightbox preview */
+        .lightbox {
+            position: fixed;
+            inset: 0;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 48px 16px 24px;
+            background: rgba(10, 12, 18, 0.82);
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.25s ease, visibility 0.25s ease;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .lightbox.is-open {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .lightbox-img {
+            display: block;
+            max-width: min(960px, 100%);
+            max-height: calc(100vh - 72px);
+            width: auto;
+            height: auto;
+            object-fit: contain;
+            border-radius: 8px;
+            box-shadow: 0 16px 48px rgba(0, 0, 0, 0.35);
+            transform: scale(0.96);
+            transition: transform 0.25s ease, opacity 0.2s ease;
+            -webkit-user-drag: none;
+            user-select: none;
+            touch-action: pan-y;
+            cursor: grab;
+        }
+
+        .lightbox.is-open .lightbox-img {
+            transform: scale(1);
+        }
+
+        .lightbox-img.is-dragging {
+            transition: none;
+            cursor: grabbing;
+        }
+
+        .lightbox-close {
+            position: absolute;
+            top: 14px;
+            right: 14px;
+            z-index: 2;
+            width: 40px;
+            height: 40px;
+            padding: 0;
+            border: none;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.92);
+            color: var(--ink);
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.18);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .lightbox-close:hover {
+            background: #fff;
+        }
+
+        .lightbox-close svg {
+            width: 18px;
+            height: 18px;
+            display: block;
+        }
+
+        .lightbox-nav {
+            position: absolute;
+            top: 50%;
+            z-index: 2;
+            width: 44px;
+            height: 44px;
+            margin-top: -22px;
+            padding: 0;
+            border: none;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.92);
+            color: var(--ink);
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.18);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .lightbox-nav:hover { background: #fff; }
+        .lightbox-prev { left: 12px; }
+        .lightbox-next { right: 12px; }
+        .lightbox-nav svg {
+            width: 20px;
+            height: 20px;
+            display: block;
+        }
+
+        .lightbox-caption {
+            position: absolute;
+            left: 0;
+            right: 0;
+            bottom: 12px;
+            padding: 0 56px;
+            color: rgba(255, 255, 255, 0.88);
+            font-size: 13px;
+            text-align: center;
+            letter-spacing: 0.03em;
+            pointer-events: none;
+        }
+
+        body.lightbox-open {
+            overflow: hidden;
+        }
+
+        .gallery-nav {
+            position: absolute;
+            top: 50%;
+            z-index: 2;
+            width: 40px;
+            height: 40px;
+            margin-top: -20px;
+            padding: 0;
+            border: none;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.88);
+            box-shadow: 0 4px 16px rgba(26, 31, 46, 0.12);
+            color: var(--ink);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.2s ease, transform 0.2s ease, opacity 0.2s ease;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .gallery-nav:hover {
+            background: #fff;
+            transform: scale(1.05);
+        }
+
+        .gallery-nav:active {
+            transform: scale(0.96);
+        }
+
+        .gallery-nav svg {
+            width: 18px;
+            height: 18px;
+            display: block;
+        }
+
+        .gallery-prev { left: 12px; }
+        .gallery-next { right: 12px; }
+
+        .gallery-dots {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+            padding: 14px 0 6px;
+        }
+
+        .gallery-dot {
+            width: 7px;
+            height: 7px;
+            padding: 0;
+            border: none;
+            border-radius: 50%;
+            background: rgba(26, 31, 46, 0.18);
+            cursor: pointer;
+            transition: background 0.2s ease, transform 0.2s ease;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .gallery-dot[aria-current="true"] {
+            background: var(--accent);
+            transform: scale(1.25);
+        }
+
+        .gallery-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            gap: 12px;
+            padding: 0 18px 4px;
+            color: #8a93a6;
+            font-size: 12px;
+            letter-spacing: 0.04em;
+        }
+
+        .gallery-meta .counter {
+            flex-shrink: 0;
+            font-variant-numeric: tabular-nums;
+            color: var(--muted);
+        }
+
+        /* Article */
+        .article-wrap {
+            padding: 8px 18px 0;
+        }
+
         .hero {
             position: relative;
-            margin: 0 -18px 28px;
-            padding: 48px 22px 40px;
+            margin: 0 0 28px;
+            padding: 28px 4px 24px;
             overflow: hidden;
             text-align: center;
-            background: #ffffff;
         }
 
         .hero::before {
@@ -95,7 +340,6 @@
             animation: fadeUp 0.7s ease forwards 0.4s;
         }
 
-        /* Article */
         article section {
             margin: 0 0 36px;
             opacity: 0;
@@ -152,13 +396,13 @@
             font-size: 15px;
         }
 
-        /* Images */
         .figure {
             margin: 18px 0 8px;
             overflow: hidden;
             border-radius: var(--radius);
             box-shadow: var(--shadow);
             background: var(--surface);
+            cursor: zoom-in;
         }
 
         .figure img {
@@ -181,7 +425,6 @@
             letter-spacing: 0.04em;
         }
 
-        /* Color chips & tips */
         .chips {
             display: flex;
             flex-wrap: wrap;
@@ -326,167 +569,486 @@
 </head>
 <body>
     <div class="page">
-        <header class="hero">
-            <div class="hero-label">COLOR THEORY</div>
-            <h1>零基础学色彩理论</h1>
-            <p class="hero-lead">颜色不只是好看——它是空间、情绪与秩序的语言。从三原色到互补色，用一张图看懂配色的底层逻辑。</p>
-        </header>
-
-        <article>
-            <section>
-                <h2>颜色从哪里来</h2>
-                <p class="lead-text">打开色相环，你会发现所有绚丽的色彩，其实都能追溯到三个起点：红、黄、蓝。</p>
-                <p>这三种颜色被称为<strong>三原色</strong>——它们彼此独立，无法由其他颜色混合而成，却能派生出几乎一切可见的色相。红与黄相遇得到橙，黄与蓝生成绿，蓝与红交融出紫，这便是<strong>三间色</strong>。间色继续混合，色彩世界便逐渐丰盈，形成层次更丰富的<strong>复色</strong>。</p>
-                <div class="chips">
-                    <span class="chip"><i style="background:#e63946"></i>红 · 原色</span>
-                    <span class="chip"><i style="background:#f4d35e"></i>黄 · 原色</span>
-                    <span class="chip"><i style="background:#457b9d"></i>蓝 · 原色</span>
-                    <span class="chip"><i style="background:#f4a261"></i>橙 · 间色</span>
-                    <span class="chip"><i style="background:#2a9d8f"></i>绿 · 间色</span>
-                    <span class="chip"><i style="background:#7b5ea7"></i>紫 · 间色</span>
-                </div>
-                <figure class="figure">
+        <section class="gallery" aria-roledescription="carousel" aria-label="色彩理论图解">
+            <div class="gallery-track" id="galleryTrack">
+                <figure class="gallery-slide">
+                    <img src="images/color_theory_01.webp" alt="色彩理论总览：色相环、冷暖分区与三要素" />
+                </figure>
+                <figure class="gallery-slide">
                     <img src="images/color_theory_02.webp" alt="认识色彩：三原色、三间色与色彩三要素" loading="lazy" />
                 </figure>
-                <p class="caption">认识色彩：从原色到间色，再到色彩三要素</p>
-            </section>
-
-            <section>
-                <h2>色彩三要素：色相 · 明度 · 纯度</h2>
-                <p>真正决定一块颜色「长什么样」的，是三个维度——懂它们，配色就从凭感觉，变成有章法。</p>
-
-                <h3>色相：颜色的相貌</h3>
-                <p>简单说，色相就是颜色的名字与样貌：红、橙、黄、绿、青、蓝、紫……十二色色相环把这些相貌排成一圈，相邻的近，相对的远，配色关系一目了然。</p>
-
-                <h3>明度：颜色的亮与暗</h3>
-                <p>明度描述的是色彩的明暗深浅。无彩色里，白最亮、黑最暗、灰居中；有彩色里，黄往往明度最高，紫则偏低——同样「纯」的颜色，天生就有明暗之分。</p>
-
-                <h3>纯度：颜色的鲜与浊</h3>
-                <p>纯度（也叫饱和度）衡量颜色的鲜艳程度。同一色相，从灰扑扑到艳丽夺目，中间隔着无数种「浓度」。想要高级感，常常不是加更亮的色，而是把纯度轻轻往下压一点。</p>
-
-                <figure class="figure">
-                    <img src="images/color_theory_03.webp" alt="色相与明度详解" loading="lazy" />
+                <figure class="gallery-slide">
+                    <img src="images/color_theory_03.webp" alt="色相与明度：十二色相环上的明暗秩序" loading="lazy" />
                 </figure>
-                <p class="caption">色相与明度：十二色相环上的明暗秩序</p>
-
-                <div class="quote">「色相定方向，明度定节奏，纯度定气质。」三要素一调，画面的情绪就跟着变了。</div>
-            </section>
-
-            <section>
-                <h2>一张图读懂色彩关系</h2>
-                <p>色相环不只是好看的圆盘，更是配色的「导航仪」。颜色之间相隔的角度不同，带来的视觉感受也截然不同：</p>
-                <div class="tip-grid">
-                    <div class="tip" style="--tip-color:#e85d4c">
-                        <strong>180° 互补色</strong>
-                        <span>对立最强，红绿、蓝橙、黄紫，对比鲜明、冲击力足。</span>
-                    </div>
-                    <div class="tip" style="--tip-color:#e9c46a">
-                        <strong>120° 对比色</strong>
-                        <span>三角关系，活泼有张力，适合需要醒目但不极端的场景。</span>
-                    </div>
-                    <div class="tip" style="--tip-color:#2a9d8f">
-                        <strong>60° 邻近色</strong>
-                        <span>冷暖统一、色调和谐，画面容易显得优雅克制。</span>
-                    </div>
-                    <div class="tip" style="--tip-color:#7b5ea7">
-                        <strong>15° 同类色</strong>
-                        <span>同色相的深浅变化，极致统一，适合营造宁静氛围。</span>
-                    </div>
-                </div>
-                <figure class="figure">
-                    <img src="images/color_theory_01.webp" alt="零基础学色彩理论总览图" loading="lazy" />
+                <figure class="gallery-slide">
+                    <img src="images/color_theory_04.webp" alt="互补色：红绿、蓝橙、黄紫" loading="lazy" />
                 </figure>
-                <p class="caption">色彩理论总览：色相环、冷暖分区与三要素</p>
-                <p>色相环还天然分成<strong>冷色调</strong>与<strong>暖色调</strong>：蓝、紫偏冷，给人后退、安静的感觉；红、橙、黄偏暖，更有前进感与温度。冷暖一摆，空间远近与情绪温度也就有了。</p>
-            </section>
-
-            <section>
-                <h2>互补色：最强烈的对话</h2>
-                <p>在色相环上相隔 180° 的颜色，互为<strong>互补色</strong>。经典三组是：</p>
-                <div class="pair-row">
-                    <div class="pair">
-                        <span class="swatch" style="background:#e63946"></span>
-                        <span>红</span>
-                        <span>×</span>
-                        <span class="swatch" style="background:#2a9d8f"></span>
-                        <span>绿</span>
-                    </div>
-                    <div class="pair">
-                        <span class="swatch" style="background:#457b9d"></span>
-                        <span>蓝</span>
-                        <span>×</span>
-                        <span class="swatch" style="background:#f4a261"></span>
-                        <span>橙</span>
-                    </div>
-                    <div class="pair">
-                        <span class="swatch" style="background:#e9c46a"></span>
-                        <span>黄</span>
-                        <span>×</span>
-                        <span class="swatch" style="background:#7b5ea7"></span>
-                        <span>紫</span>
-                    </div>
-                </div>
-                <p>颜料混合时，补色相叠会趋向灰黑，这叫「补色相减」；并置时，它们又会彼此衬托——红显得更红，绿显得更绿。冲击力很强，也容易显得吵闹。</p>
-                <p>想用互补色又不刺眼：降低一方的饱和度、控制面积比例，或在中间加入黑、白、灰作为过渡，强烈就能收成高级。</p>
-                <figure class="figure">
-                    <img src="images/color_theory_04.webp" alt="互补色原理与三组经典配色" loading="lazy" />
+                <figure class="gallery-slide">
+                    <img src="images/color_theory_05.webp" alt="邻近色与同类色：60° 与 15° 的微妙差别" loading="lazy" />
                 </figure>
-                <p class="caption">互补色：红绿、蓝橙、黄紫</p>
-            </section>
+            </div>
+            <button type="button" class="gallery-nav gallery-prev" id="galleryPrev" aria-label="上一张">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <polyline points="15 18 9 12 15 6"></polyline>
+                </svg>
+            </button>
+            <button type="button" class="gallery-nav gallery-next" id="galleryNext" aria-label="下一张">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <polyline points="9 18 15 12 9 6"></polyline>
+                </svg>
+            </button>
+        </section>
 
-            <section>
-                <h2>邻近色与同类色：和谐的秘诀</h2>
-                <p>如果说互补色是一场激烈对话，那邻近色与同类色更像轻声细语——统一、安宁，却不乏层次。</p>
+        <div class="gallery-meta">
+            <span id="galleryCaption">色彩理论总览：色相环、冷暖分区与三要素</span>
+            <span class="counter"><span id="galleryIndex">1</span> / 5</span>
+        </div>
+        <div class="gallery-dots" id="galleryDots" role="tablist" aria-label="切换图片"></div>
 
-                <h3>邻近色（约 60°）</h3>
-                <p>色相彼此接近、冷暖性质统一，在 24 色色环上通常是相邻的四个颜色。画面容易形成协调的整体色调，适合品牌主色延展、空间氛围营造。</p>
+        <div class="article-wrap">
+            <header class="hero">
+                <div class="hero-label">COLOR THEORY</div>
+                <h1>零基础学色彩理论</h1>
+                <p class="hero-lead">颜色不只是好看——它是空间、情绪与秩序的语言。从三原色到互补色，用一张图看懂配色的底层逻辑。</p>
+            </header>
 
-                <h3>同类色（约 15°）</h3>
-                <p>色相几乎相同，主要靠明度深浅拉开层次。统一感极强，适合极简风与情绪化表达；若担心单调，就在明度与纯度上做文章。</p>
-
-                <figure class="figure">
-                    <img src="images/color_theory_05.webp" alt="邻近色与同类色对比说明" loading="lazy" />
-                </figure>
-                <p class="caption">邻近色 vs 同类色：60° 与 15° 的微妙差别</p>
-            </section>
-
-            <section>
-                <h2>四种配色思路，怎么用才不翻车</h2>
-                <p>理论落到手上，常用的就这几招。每种都有优点、也有坑，知道怎么「救场」，配色才真正好用。</p>
-                <div class="tip-grid">
-                    <div class="tip" style="--tip-color:#f4a261">
-                        <strong>同类色搭配</strong>
-                        <span>优点：和谐统一。缺点：易显单调。解法：拉开明度与纯度，注意面积比例，让主色在画面中有所呼应。</span>
+            <article>
+                <section>
+                    <h2>颜色从哪里来</h2>
+                    <p class="lead-text">打开色相环，你会发现所有绚丽的色彩，其实都能追溯到三个起点：红、黄、蓝。</p>
+                    <p>这三种颜色被称为<strong>三原色</strong>——它们彼此独立，无法由其他颜色混合而成，却能派生出几乎一切可见的色相。红与黄相遇得到橙，黄与蓝生成绿，蓝与红交融出紫，这便是<strong>三间色</strong>。间色继续混合，色彩世界便逐渐丰盈，形成层次更丰富的<strong>复色</strong>。</p>
+                    <div class="chips">
+                        <span class="chip"><i style="background:#e63946"></i>红 · 原色</span>
+                        <span class="chip"><i style="background:#f4d35e"></i>黄 · 原色</span>
+                        <span class="chip"><i style="background:#457b9d"></i>蓝 · 原色</span>
+                        <span class="chip"><i style="background:#f4a261"></i>橙 · 间色</span>
+                        <span class="chip"><i style="background:#2a9d8f"></i>绿 · 间色</span>
+                        <span class="chip"><i style="background:#7b5ea7"></i>紫 · 间色</span>
                     </div>
-                    <div class="tip" style="--tip-color:#2a9d8f">
-                        <strong>邻近色搭配</strong>
-                        <span>优点：优雅协调。缺点：刺激感不足。解法：同样用明暗、纯度对比，让主次分明。</span>
-                    </div>
-                    <div class="tip" style="--tip-color:#e9c46a">
-                        <strong>对比色搭配</strong>
-                        <span>优点：醒目活泼。缺点：易乱、易腻。解法：降低辅色饱和度、缩小辅色面积，或用黑白间隔。</span>
-                    </div>
-                    <div class="tip" style="--tip-color:#e85d4c">
-                        <strong>互补色搭配</strong>
-                        <span>优点：强烈有力。缺点：易显稚气或疲劳。解法：同对比色——控纯度、控面积、加中性色缓冲。</span>
-                    </div>
-                </div>
-            </section>
+                    <figure class="figure" data-gallery-index="1">
+                        <img src="images/color_theory_02.webp" alt="认识色彩：三原色、三间色与色彩三要素" loading="lazy" />
+                    </figure>
+                    <p class="caption">认识色彩：从原色到间色，再到色彩三要素</p>
+                </section>
 
-            <section>
-                <h2>给颜色起个好听的名字</h2>
-                <p>同是「绿」，也可以是薄荷绿、典雅绿、碧波绿、生机绿、翡翠绿、墨绿……名字一变，气质就变。学色彩，不只是记角度与公式，更是学会感受每一种颜色背后的情绪与故事。</p>
-                <p>下次选色时，不妨先问自己三个问题：<strong>想要什么情绪？冷还是暖？统一还是对比？</strong>答案清楚了，色相环上的那一笔，也就有了方向。</p>
-            </section>
+                <section>
+                    <h2>色彩三要素：色相 · 明度 · 纯度</h2>
+                    <p>真正决定一块颜色「长什么样」的，是三个维度——懂它们，配色就从凭感觉，变成有章法。</p>
 
-            <section class="outro">
-                <p class="closing">颜色是设计的呼吸，也是情绪的温度计。</p>
-                <p>从今天起，把色相环装进心里——配色，其实没有那么难。</p>
-            </section>
-        </article>
+                    <h3>色相：颜色的相貌</h3>
+                    <p>简单说，色相就是颜色的名字与样貌：红、橙、黄、绿、青、蓝、紫……十二色色相环把这些相貌排成一圈，相邻的近，相对的远，配色关系一目了然。</p>
+
+                    <h3>明度：颜色的亮与暗</h3>
+                    <p>明度描述的是色彩的明暗深浅。无彩色里，白最亮、黑最暗、灰居中；有彩色里，黄往往明度最高，紫则偏低——同样「纯」的颜色，天生就有明暗之分。</p>
+
+                    <h3>纯度：颜色的鲜与浊</h3>
+                    <p>纯度（也叫饱和度）衡量颜色的鲜艳程度。同一色相，从灰扑扑到艳丽夺目，中间隔着无数种「浓度」。想要高级感，常常不是加更亮的色，而是把纯度轻轻往下压一点。</p>
+
+                    <figure class="figure" data-gallery-index="2">
+                        <img src="images/color_theory_03.webp" alt="色相与明度详解" loading="lazy" />
+                    </figure>
+                    <p class="caption">色相与明度：十二色相环上的明暗秩序</p>
+
+                    <div class="quote">「色相定方向，明度定节奏，纯度定气质。」三要素一调，画面的情绪就跟着变了。</div>
+                </section>
+
+                <section>
+                    <h2>一张图读懂色彩关系</h2>
+                    <p>色相环不只是好看的圆盘，更是配色的「导航仪」。颜色之间相隔的角度不同，带来的视觉感受也截然不同：</p>
+                    <div class="tip-grid">
+                        <div class="tip" style="--tip-color:#e85d4c">
+                            <strong>180° 互补色</strong>
+                            <span>对立最强，红绿、蓝橙、黄紫，对比鲜明、冲击力足。</span>
+                        </div>
+                        <div class="tip" style="--tip-color:#e9c46a">
+                            <strong>120° 对比色</strong>
+                            <span>三角关系，活泼有张力，适合需要醒目但不极端的场景。</span>
+                        </div>
+                        <div class="tip" style="--tip-color:#2a9d8f">
+                            <strong>60° 邻近色</strong>
+                            <span>冷暖统一、色调和谐，画面容易显得优雅克制。</span>
+                        </div>
+                        <div class="tip" style="--tip-color:#7b5ea7">
+                            <strong>15° 同类色</strong>
+                            <span>同色相的深浅变化，极致统一，适合营造宁静氛围。</span>
+                        </div>
+                    </div>
+                    <figure class="figure" data-gallery-index="0">
+                        <img src="images/color_theory_01.webp" alt="零基础学色彩理论总览图" loading="lazy" />
+                    </figure>
+                    <p class="caption">色彩理论总览：色相环、冷暖分区与三要素</p>
+                    <p>色相环还天然分成<strong>冷色调</strong>与<strong>暖色调</strong>：蓝、紫偏冷，给人后退、安静的感觉；红、橙、黄偏暖，更有前进感与温度。冷暖一摆，空间远近与情绪温度也就有了。</p>
+                </section>
+
+                <section>
+                    <h2>互补色：最强烈的对话</h2>
+                    <p>在色相环上相隔 180° 的颜色，互为<strong>互补色</strong>。经典三组是：</p>
+                    <div class="pair-row">
+                        <div class="pair">
+                            <span class="swatch" style="background:#e63946"></span>
+                            <span>红</span>
+                            <span>×</span>
+                            <span class="swatch" style="background:#2a9d8f"></span>
+                            <span>绿</span>
+                        </div>
+                        <div class="pair">
+                            <span class="swatch" style="background:#457b9d"></span>
+                            <span>蓝</span>
+                            <span>×</span>
+                            <span class="swatch" style="background:#f4a261"></span>
+                            <span>橙</span>
+                        </div>
+                        <div class="pair">
+                            <span class="swatch" style="background:#e9c46a"></span>
+                            <span>黄</span>
+                            <span>×</span>
+                            <span class="swatch" style="background:#7b5ea7"></span>
+                            <span>紫</span>
+                        </div>
+                    </div>
+                    <p>颜料混合时，补色相叠会趋向灰黑，这叫「补色相减」；并置时，它们又会彼此衬托——红显得更红，绿显得更绿。冲击力很强，也容易显得吵闹。</p>
+                    <p>想用互补色又不刺眼：降低一方的饱和度、控制面积比例，或在中间加入黑、白、灰作为过渡，强烈就能收成高级。</p>
+                    <figure class="figure" data-gallery-index="3">
+                        <img src="images/color_theory_04.webp" alt="互补色原理与三组经典配色" loading="lazy" />
+                    </figure>
+                    <p class="caption">互补色：红绿、蓝橙、黄紫</p>
+                </section>
+
+                <section>
+                    <h2>邻近色与同类色：和谐的秘诀</h2>
+                    <p>如果说互补色是一场激烈对话，那邻近色与同类色更像轻声细语——统一、安宁，却不乏层次。</p>
+
+                    <h3>邻近色（约 60°）</h3>
+                    <p>色相彼此接近、冷暖性质统一，在 24 色色环上通常是相邻的四个颜色。画面容易形成协调的整体色调，适合品牌主色延展、空间氛围营造。</p>
+
+                    <h3>同类色（约 15°）</h3>
+                    <p>色相几乎相同，主要靠明度深浅拉开层次。统一感极强，适合极简风与情绪化表达；若担心单调，就在明度与纯度上做文章。</p>
+
+                    <figure class="figure" data-gallery-index="4">
+                        <img src="images/color_theory_05.webp" alt="邻近色与同类色对比说明" loading="lazy" />
+                    </figure>
+                    <p class="caption">邻近色 vs 同类色：60° 与 15° 的微妙差别</p>
+                </section>
+
+                <section>
+                    <h2>四种配色思路，怎么用才不翻车</h2>
+                    <p>理论落到手上，常用的就这几招。每种都有优点、也有坑，知道怎么「救场」，配色才真正好用。</p>
+                    <div class="tip-grid">
+                        <div class="tip" style="--tip-color:#f4a261">
+                            <strong>同类色搭配</strong>
+                            <span>优点：和谐统一。缺点：易显单调。解法：拉开明度与纯度，注意面积比例，让主色在画面中有所呼应。</span>
+                        </div>
+                        <div class="tip" style="--tip-color:#2a9d8f">
+                            <strong>邻近色搭配</strong>
+                            <span>优点：优雅协调。缺点：刺激感不足。解法：同样用明暗、纯度对比，让主次分明。</span>
+                        </div>
+                        <div class="tip" style="--tip-color:#e9c46a">
+                            <strong>对比色搭配</strong>
+                            <span>优点：醒目活泼。缺点：易乱、易腻。解法：降低辅色饱和度、缩小辅色面积，或用黑白间隔。</span>
+                        </div>
+                        <div class="tip" style="--tip-color:#e85d4c">
+                            <strong>互补色搭配</strong>
+                            <span>优点：强烈有力。缺点：易显稚气或疲劳。解法：同对比色——控纯度、控面积、加中性色缓冲。</span>
+                        </div>
+                    </div>
+                </section>
+
+                <section>
+                    <h2>给颜色起个好听的名字</h2>
+                    <p>同是「绿」，也可以是薄荷绿、典雅绿、碧波绿、生机绿、翡翠绿、墨绿……名字一变，气质就变。学色彩，不只是记角度与公式，更是学会感受每一种颜色背后的情绪与故事。</p>
+                    <p>下次选色时，不妨先问自己三个问题：<strong>想要什么情绪？冷还是暖？统一还是对比？</strong>答案清楚了，色相环上的那一笔，也就有了方向。</p>
+                </section>
+
+                <section class="outro">
+                    <p class="closing">颜色是设计的呼吸，也是情绪的温度计。</p>
+                    <p>从今天起，把色相环装进心里——配色，其实没有那么难。</p>
+                </section>
+            </article>
+        </div>
+    </div>
+
+    <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="图片预览" hidden>
+        <button type="button" class="lightbox-close" id="lightboxClose" aria-label="关闭预览">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true">
+                <line x1="18" y1="6" x2="6" y2="18"></line>
+                <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
+        </button>
+        <button type="button" class="lightbox-nav lightbox-prev" id="lightboxPrev" aria-label="上一张">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <polyline points="15 18 9 12 15 6"></polyline>
+            </svg>
+        </button>
+        <img class="lightbox-img" id="lightboxImg" alt="" />
+        <button type="button" class="lightbox-nav lightbox-next" id="lightboxNext" aria-label="下一张">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <polyline points="9 18 15 12 9 6"></polyline>
+            </svg>
+        </button>
+        <p class="lightbox-caption" id="lightboxCaption"></p>
     </div>
 
     <script>
+        (function () {
+            var captions = [
+                "色彩理论总览：色相环、冷暖分区与三要素",
+                "认识色彩：从原色到间色，再到色彩三要素",
+                "色相与明度：十二色相环上的明暗秩序",
+                "互补色：红绿、蓝橙、黄紫",
+                "邻近色 vs 同类色：60° 与 15° 的微妙差别"
+            ];
+            var total = captions.length;
+            var index = 0;
+            var gallery = document.querySelector(".gallery");
+            var track = document.getElementById("galleryTrack");
+            var slides = track.querySelectorAll(".gallery-slide img");
+            var dotsWrap = document.getElementById("galleryDots");
+            var captionEl = document.getElementById("galleryCaption");
+            var indexEl = document.getElementById("galleryIndex");
+            var lightbox = document.getElementById("lightbox");
+            var lightboxImg = document.getElementById("lightboxImg");
+            var lightboxCaption = document.getElementById("lightboxCaption");
+            var lightboxOpen = false;
+            var dots = [];
+
+            for (var i = 0; i < total; i++) {
+                (function (n) {
+                    var btn = document.createElement("button");
+                    btn.type = "button";
+                    btn.className = "gallery-dot";
+                    btn.setAttribute("role", "tab");
+                    btn.setAttribute("aria-label", "第 " + (n + 1) + " 张");
+                    btn.addEventListener("click", function () { goTo(n); });
+                    dotsWrap.appendChild(btn);
+                    dots.push(btn);
+                })(i);
+            }
+
+            function render() {
+                track.style.transform = "translateX(-" + index * 100 + "%)";
+                captionEl.textContent = captions[index];
+                indexEl.textContent = String(index + 1);
+                for (var d = 0; d < dots.length; d++) {
+                    if (d === index) dots[d].setAttribute("aria-current", "true");
+                    else dots[d].removeAttribute("aria-current");
+                }
+                if (lightboxOpen) syncLightbox();
+            }
+
+            function syncLightbox() {
+                var img = slides[index];
+                lightboxImg.src = img.currentSrc || img.src;
+                lightboxImg.alt = img.alt || captions[index];
+                lightboxCaption.textContent = captions[index] + "  ·  " + (index + 1) + " / " + total;
+            }
+
+            function openLightbox(atIndex) {
+                if (typeof atIndex === "number") goTo(atIndex);
+                syncLightbox();
+                lightbox.hidden = false;
+                // force reflow so transition runs
+                void lightbox.offsetWidth;
+                lightbox.classList.add("is-open");
+                document.body.classList.add("lightbox-open");
+                lightboxOpen = true;
+            }
+
+            document.querySelectorAll(".figure[data-gallery-index]").forEach(function (fig) {
+                fig.addEventListener("click", function () {
+                    var n = parseInt(fig.getAttribute("data-gallery-index"), 10);
+                    if (!isNaN(n)) openLightbox(n);
+                });
+            });
+
+            function closeLightbox() {
+                lightbox.classList.remove("is-open");
+                document.body.classList.remove("lightbox-open");
+                lightboxOpen = false;
+                setTimeout(function () {
+                    if (!lightboxOpen) lightbox.hidden = true;
+                }, 250);
+            }
+
+            function goTo(n) {
+                index = (n % total + total) % total;
+                render();
+            }
+
+            function next() { goTo(index + 1); }
+            function prev() { goTo(index - 1); }
+
+            document.getElementById("galleryPrev").addEventListener("click", function (e) {
+                e.stopPropagation();
+                prev();
+            });
+            document.getElementById("galleryNext").addEventListener("click", function (e) {
+                e.stopPropagation();
+                next();
+            });
+            document.getElementById("lightboxClose").addEventListener("click", closeLightbox);
+            document.getElementById("lightboxPrev").addEventListener("click", function (e) {
+                e.stopPropagation();
+                prev();
+            });
+            document.getElementById("lightboxNext").addEventListener("click", function (e) {
+                e.stopPropagation();
+                next();
+            });
+            lightbox.addEventListener("click", function (e) {
+                if (e.target === lightbox) closeLightbox();
+            });
+
+            // Lightbox swipe
+            var lbStartX = 0;
+            var lbDeltaX = 0;
+            var lbDragging = false;
+
+            function lbOnStart(clientX) {
+                lbDragging = true;
+                lbStartX = clientX;
+                lbDeltaX = 0;
+                lightboxImg.classList.add("is-dragging");
+            }
+
+            function lbOnMove(clientX) {
+                if (!lbDragging) return;
+                lbDeltaX = clientX - lbStartX;
+                lightboxImg.style.transform = "translateX(" + lbDeltaX + "px)";
+                lightboxImg.style.opacity = String(Math.max(0.45, 1 - Math.abs(lbDeltaX) / 420));
+            }
+
+            function lbOnEnd() {
+                if (!lbDragging) return;
+                lbDragging = false;
+                lightboxImg.classList.remove("is-dragging");
+                lightboxImg.style.transform = "";
+                lightboxImg.style.opacity = "";
+                if (Math.abs(lbDeltaX) > 56) {
+                    if (lbDeltaX < 0) next();
+                    else prev();
+                }
+            }
+
+            function lbIsOnChrome(target) {
+                return !!(target.closest && target.closest(".lightbox-close, .lightbox-nav"));
+            }
+
+            lightbox.addEventListener("touchstart", function (e) {
+                if (!lightboxOpen || e.touches.length !== 1) return;
+                if (lbIsOnChrome(e.target)) return;
+                lbOnStart(e.touches[0].clientX);
+            }, { passive: true });
+
+            lightbox.addEventListener("touchmove", function (e) {
+                if (!lbDragging || e.touches.length !== 1) return;
+                lbOnMove(e.touches[0].clientX);
+            }, { passive: true });
+
+            lightbox.addEventListener("touchend", lbOnEnd);
+            lightbox.addEventListener("touchcancel", lbOnEnd);
+
+            lightbox.addEventListener("mousedown", function (e) {
+                if (!lightboxOpen || e.button !== 0) return;
+                if (lbIsOnChrome(e.target)) return;
+                e.preventDefault();
+                lbOnStart(e.clientX);
+            });
+
+            window.addEventListener("mousemove", function (e) {
+                if (!lbDragging) return;
+                lbOnMove(e.clientX);
+            });
+
+            window.addEventListener("mouseup", function () {
+                if (lbDragging) lbOnEnd();
+            });
+
+            // Gallery swipe / drag
+            var startX = 0;
+            var deltaX = 0;
+            var dragging = false;
+            var width = 0;
+            var ignoreClick = false;
+
+            function onStart(clientX) {
+                dragging = true;
+                ignoreClick = false;
+                startX = clientX;
+                deltaX = 0;
+                width = gallery.offsetWidth;
+                track.classList.add("dragging");
+            }
+
+            function onMove(clientX) {
+                if (!dragging) return;
+                deltaX = clientX - startX;
+                if (Math.abs(deltaX) > 8) ignoreClick = true;
+                track.style.transform = "translateX(calc(-" + index * 100 + "% + " + deltaX + "px))";
+            }
+
+            function onEnd() {
+                if (!dragging) return;
+                dragging = false;
+                track.classList.remove("dragging");
+                if (Math.abs(deltaX) > width * 0.18) {
+                    ignoreClick = true;
+                    if (deltaX < 0) next();
+                    else prev();
+                } else {
+                    render();
+                }
+            }
+
+            gallery.addEventListener("touchstart", function (e) {
+                if (e.touches.length !== 1) return;
+                if (e.target.closest && e.target.closest(".gallery-nav")) return;
+                onStart(e.touches[0].clientX);
+            }, { passive: true });
+
+            gallery.addEventListener("touchmove", function (e) {
+                if (!dragging || e.touches.length !== 1) return;
+                onMove(e.touches[0].clientX);
+            }, { passive: true });
+
+            gallery.addEventListener("touchend", function () {
+                var wasTap = dragging && !ignoreClick && Math.abs(deltaX) < 8;
+                onEnd();
+                if (wasTap) openLightbox();
+            });
+            gallery.addEventListener("touchcancel", onEnd);
+
+            gallery.addEventListener("mousedown", function (e) {
+                if (e.button !== 0) return;
+                if (e.target.closest && e.target.closest(".gallery-nav")) return;
+                e.preventDefault();
+                onStart(e.clientX);
+            });
+
+            window.addEventListener("mousemove", function (e) {
+                if (!dragging) return;
+                onMove(e.clientX);
+            });
+
+            window.addEventListener("mouseup", function () {
+                var wasTap = dragging && !ignoreClick && Math.abs(deltaX) < 8;
+                onEnd();
+                if (wasTap) openLightbox();
+            });
+
+            document.addEventListener("keydown", function (e) {
+                if (lightboxOpen) {
+                    if (e.key === "Escape") closeLightbox();
+                    else if (e.key === "ArrowLeft") prev();
+                    else if (e.key === "ArrowRight") next();
+                    return;
+                }
+                if (e.key === "ArrowLeft") prev();
+                else if (e.key === "ArrowRight") next();
+            });
+
+            render();
+        })();
+
         (function () {
             var sections = document.querySelectorAll("article section");
             if (!("IntersectionObserver" in window)) {
