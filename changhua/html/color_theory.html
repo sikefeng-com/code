@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>零基础学色彩理论 · 看懂颜色的语言</title>
+    <style>
+        :root {
+            --ink: #1a1f2e;
+            --muted: #5c6578;
+            --paper: #ffffff;
+            --surface: #ffffff;
+            --accent: #e85d4c;
+            --accent-cool: #3d7ea6;
+            --warm: #f4a261;
+            --line: rgba(26, 31, 46, 0.08);
+            --shadow: 0 12px 40px rgba(26, 31, 46, 0.08);
+            --radius: 18px;
+            --font-display: "Songti SC", "STSong", "Noto Serif SC", "SimSun", serif;
+            --font-body: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            margin: 0;
+            color: var(--ink);
+            font-family: var(--font-body);
+            font-size: 15px;
+            line-height: 1.8;
+            background: #ffffff;
+            word-wrap: break-word;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .page {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 28px 18px 56px;
+        }
+
+        /* Hero */
+        .hero {
+            position: relative;
+            margin: 0 -18px 28px;
+            padding: 48px 22px 40px;
+            overflow: hidden;
+            text-align: center;
+            background: #ffffff;
+        }
+
+        .hero::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            height: 4px;
+            background: linear-gradient(
+                90deg,
+                #e85d4c, #f4a261, #e9c46a, #2a9d8f, #3d7ea6, #7b5ea7, #e85d4c
+            );
+            background-size: 200% 100%;
+            animation: spectrumShift 8s linear infinite;
+        }
+
+        .hero-label {
+            display: inline-block;
+            margin: 0 0 14px;
+            color: var(--accent-cool);
+            font-size: 12px;
+            letter-spacing: 0.28em;
+            text-transform: uppercase;
+            opacity: 0;
+            animation: fadeUp 0.7s ease forwards 0.1s;
+        }
+
+        .hero h1 {
+            margin: 0 0 14px;
+            font-family: var(--font-display);
+            font-size: clamp(28px, 7vw, 38px);
+            font-weight: 700;
+            letter-spacing: 0.04em;
+            line-height: 1.25;
+            opacity: 0;
+            animation: fadeUp 0.7s ease forwards 0.25s;
+        }
+
+        .hero-lead {
+            max-width: 28em;
+            margin: 0 auto;
+            color: var(--muted);
+            font-size: 15px;
+            opacity: 0;
+            animation: fadeUp 0.7s ease forwards 0.4s;
+        }
+
+        /* Article */
+        article section {
+            margin: 0 0 36px;
+            opacity: 0;
+            transform: translateY(16px);
+            animation: fadeUp 0.65s ease forwards;
+        }
+
+        article section:nth-of-type(1) { animation-delay: 0.35s; }
+        article section:nth-of-type(2) { animation-delay: 0.45s; }
+        article section:nth-of-type(3) { animation-delay: 0.55s; }
+        article section:nth-of-type(4) { animation-delay: 0.2s; animation-play-state: paused; }
+        article section:nth-of-type(5) { animation-play-state: paused; }
+        article section:nth-of-type(6) { animation-play-state: paused; }
+        article section:nth-of-type(7) { animation-play-state: paused; }
+        article section:nth-of-type(8) { animation-play-state: paused; }
+        article section.in-view { animation-play-state: running; }
+
+        h2 {
+            position: relative;
+            margin: 0 0 12px;
+            padding-bottom: 10px;
+            font-family: var(--font-display);
+            font-size: 22px;
+            font-weight: 700;
+            letter-spacing: 0.03em;
+        }
+
+        h2::after {
+            content: "";
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 42px;
+            height: 3px;
+            border-radius: 2px;
+            background: linear-gradient(90deg, var(--accent), var(--warm));
+        }
+
+        h3 {
+            margin: 20px 0 8px;
+            color: var(--accent-cool);
+            font-size: 16px;
+            font-weight: 600;
+        }
+
+        p {
+            margin: 0 0 12px;
+            color: #2c3344;
+            text-align: justify;
+        }
+
+        .lead-text {
+            color: var(--muted);
+            font-size: 15px;
+        }
+
+        /* Images */
+        .figure {
+            margin: 18px 0 8px;
+            overflow: hidden;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            background: var(--surface);
+        }
+
+        .figure img {
+            display: block;
+            width: 100%;
+            height: auto;
+            vertical-align: middle;
+            transition: transform 0.6s ease;
+        }
+
+        .figure:hover img {
+            transform: scale(1.02);
+        }
+
+        .caption {
+            margin: 8px 0 18px;
+            color: #8a93a6;
+            font-size: 12px;
+            text-align: center;
+            letter-spacing: 0.04em;
+        }
+
+        /* Color chips & tips */
+        .chips {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin: 14px 0 18px;
+        }
+
+        .chip {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 12px 6px 6px;
+            background: var(--surface);
+            border: 1px solid var(--line);
+            border-radius: 999px;
+            font-size: 13px;
+            color: var(--muted);
+        }
+
+        .chip i {
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.08);
+        }
+
+        .tip-grid {
+            display: grid;
+            gap: 12px;
+            margin: 16px 0;
+        }
+
+        @media (min-width: 560px) {
+            .tip-grid { grid-template-columns: 1fr 1fr; }
+        }
+
+        .tip {
+            padding: 14px 16px;
+            background: var(--surface);
+            border: 1px solid var(--line);
+            border-radius: 14px;
+            border-top: 3px solid var(--tip-color, var(--accent));
+        }
+
+        .tip strong {
+            display: block;
+            margin-bottom: 4px;
+            color: var(--ink);
+            font-size: 14px;
+        }
+
+        .tip span {
+            color: var(--muted);
+            font-size: 13px;
+            line-height: 1.65;
+        }
+
+        .quote {
+            margin: 18px 0;
+            padding: 16px 18px;
+            color: var(--ink);
+            font-family: var(--font-display);
+            font-size: 16px;
+            line-height: 1.7;
+            background: #ffffff;
+            border: 1px solid var(--line);
+            border-left: 3px solid var(--accent);
+            border-radius: 0 14px 14px 0;
+        }
+
+        .pair-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 14px 0 18px;
+        }
+
+        .pair {
+            flex: 1 1 140px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            padding: 12px;
+            background: var(--surface);
+            border: 1px solid var(--line);
+            border-radius: 12px;
+            font-size: 13px;
+            color: var(--muted);
+        }
+
+        .swatch {
+            width: 22px;
+            height: 22px;
+            border-radius: 6px;
+            box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.1);
+        }
+
+        .outro {
+            margin-top: 8px;
+            padding: 28px 20px;
+            text-align: center;
+            background: #ffffff;
+            border: 1px solid var(--line);
+            border-radius: var(--radius);
+        }
+
+        .outro p {
+            margin: 0;
+            text-align: center;
+            color: var(--muted);
+        }
+
+        .outro .closing {
+            margin-bottom: 8px;
+            color: var(--ink);
+            font-family: var(--font-display);
+            font-size: 18px;
+        }
+
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(16px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes spectrumShift {
+            0% { background-position: 0% 50%; }
+            100% { background-position: 200% 50%; }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation: none !important;
+                transition: none !important;
+            }
+            article section, .hero-label, .hero h1, .hero-lead {
+                opacity: 1;
+                transform: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="page">
+        <header class="hero">
+            <div class="hero-label">COLOR THEORY</div>
+            <h1>零基础学色彩理论</h1>
+            <p class="hero-lead">颜色不只是好看——它是空间、情绪与秩序的语言。从三原色到互补色，用一张图看懂配色的底层逻辑。</p>
+        </header>
+
+        <article>
+            <section>
+                <h2>颜色从哪里来</h2>
+                <p class="lead-text">打开色相环，你会发现所有绚丽的色彩，其实都能追溯到三个起点：红、黄、蓝。</p>
+                <p>这三种颜色被称为<strong>三原色</strong>——它们彼此独立，无法由其他颜色混合而成，却能派生出几乎一切可见的色相。红与黄相遇得到橙，黄与蓝生成绿，蓝与红交融出紫，这便是<strong>三间色</strong>。间色继续混合，色彩世界便逐渐丰盈，形成层次更丰富的<strong>复色</strong>。</p>
+                <div class="chips">
+                    <span class="chip"><i style="background:#e63946"></i>红 · 原色</span>
+                    <span class="chip"><i style="background:#f4d35e"></i>黄 · 原色</span>
+                    <span class="chip"><i style="background:#457b9d"></i>蓝 · 原色</span>
+                    <span class="chip"><i style="background:#f4a261"></i>橙 · 间色</span>
+                    <span class="chip"><i style="background:#2a9d8f"></i>绿 · 间色</span>
+                    <span class="chip"><i style="background:#7b5ea7"></i>紫 · 间色</span>
+                </div>
+                <figure class="figure">
+                    <img src="images/color_theory_02.webp" alt="认识色彩：三原色、三间色与色彩三要素" loading="lazy" />
+                </figure>
+                <p class="caption">认识色彩：从原色到间色，再到色彩三要素</p>
+            </section>
+
+            <section>
+                <h2>色彩三要素：色相 · 明度 · 纯度</h2>
+                <p>真正决定一块颜色「长什么样」的，是三个维度——懂它们，配色就从凭感觉，变成有章法。</p>
+
+                <h3>色相：颜色的相貌</h3>
+                <p>简单说，色相就是颜色的名字与样貌：红、橙、黄、绿、青、蓝、紫……十二色色相环把这些相貌排成一圈，相邻的近，相对的远，配色关系一目了然。</p>
+
+                <h3>明度：颜色的亮与暗</h3>
+                <p>明度描述的是色彩的明暗深浅。无彩色里，白最亮、黑最暗、灰居中；有彩色里，黄往往明度最高，紫则偏低——同样「纯」的颜色，天生就有明暗之分。</p>
+
+                <h3>纯度：颜色的鲜与浊</h3>
+                <p>纯度（也叫饱和度）衡量颜色的鲜艳程度。同一色相，从灰扑扑到艳丽夺目，中间隔着无数种「浓度」。想要高级感，常常不是加更亮的色，而是把纯度轻轻往下压一点。</p>
+
+                <figure class="figure">
+                    <img src="images/color_theory_03.webp" alt="色相与明度详解" loading="lazy" />
+                </figure>
+                <p class="caption">色相与明度：十二色相环上的明暗秩序</p>
+
+                <div class="quote">「色相定方向，明度定节奏，纯度定气质。」三要素一调，画面的情绪就跟着变了。</div>
+            </section>
+
+            <section>
+                <h2>一张图读懂色彩关系</h2>
+                <p>色相环不只是好看的圆盘，更是配色的「导航仪」。颜色之间相隔的角度不同，带来的视觉感受也截然不同：</p>
+                <div class="tip-grid">
+                    <div class="tip" style="--tip-color:#e85d4c">
+                        <strong>180° 互补色</strong>
+                        <span>对立最强，红绿、蓝橙、黄紫，对比鲜明、冲击力足。</span>
+                    </div>
+                    <div class="tip" style="--tip-color:#e9c46a">
+                        <strong>120° 对比色</strong>
+                        <span>三角关系，活泼有张力，适合需要醒目但不极端的场景。</span>
+                    </div>
+                    <div class="tip" style="--tip-color:#2a9d8f">
+                        <strong>60° 邻近色</strong>
+                        <span>冷暖统一、色调和谐，画面容易显得优雅克制。</span>
+                    </div>
+                    <div class="tip" style="--tip-color:#7b5ea7">
+                        <strong>15° 同类色</strong>
+                        <span>同色相的深浅变化，极致统一，适合营造宁静氛围。</span>
+                    </div>
+                </div>
+                <figure class="figure">
+                    <img src="images/color_theory_01.webp" alt="零基础学色彩理论总览图" loading="lazy" />
+                </figure>
+                <p class="caption">色彩理论总览：色相环、冷暖分区与三要素</p>
+                <p>色相环还天然分成<strong>冷色调</strong>与<strong>暖色调</strong>：蓝、紫偏冷，给人后退、安静的感觉；红、橙、黄偏暖，更有前进感与温度。冷暖一摆，空间远近与情绪温度也就有了。</p>
+            </section>
+
+            <section>
+                <h2>互补色：最强烈的对话</h2>
+                <p>在色相环上相隔 180° 的颜色，互为<strong>互补色</strong>。经典三组是：</p>
+                <div class="pair-row">
+                    <div class="pair">
+                        <span class="swatch" style="background:#e63946"></span>
+                        <span>红</span>
+                        <span>×</span>
+                        <span class="swatch" style="background:#2a9d8f"></span>
+                        <span>绿</span>
+                    </div>
+                    <div class="pair">
+                        <span class="swatch" style="background:#457b9d"></span>
+                        <span>蓝</span>
+                        <span>×</span>
+                        <span class="swatch" style="background:#f4a261"></span>
+                        <span>橙</span>
+                    </div>
+                    <div class="pair">
+                        <span class="swatch" style="background:#e9c46a"></span>
+                        <span>黄</span>
+                        <span>×</span>
+                        <span class="swatch" style="background:#7b5ea7"></span>
+                        <span>紫</span>
+                    </div>
+                </div>
+                <p>颜料混合时，补色相叠会趋向灰黑，这叫「补色相减」；并置时，它们又会彼此衬托——红显得更红，绿显得更绿。冲击力很强，也容易显得吵闹。</p>
+                <p>想用互补色又不刺眼：降低一方的饱和度、控制面积比例，或在中间加入黑、白、灰作为过渡，强烈就能收成高级。</p>
+                <figure class="figure">
+                    <img src="images/color_theory_04.webp" alt="互补色原理与三组经典配色" loading="lazy" />
+                </figure>
+                <p class="caption">互补色：红绿、蓝橙、黄紫</p>
+            </section>
+
+            <section>
+                <h2>邻近色与同类色：和谐的秘诀</h2>
+                <p>如果说互补色是一场激烈对话，那邻近色与同类色更像轻声细语——统一、安宁，却不乏层次。</p>
+
+                <h3>邻近色（约 60°）</h3>
+                <p>色相彼此接近、冷暖性质统一，在 24 色色环上通常是相邻的四个颜色。画面容易形成协调的整体色调，适合品牌主色延展、空间氛围营造。</p>
+
+                <h3>同类色（约 15°）</h3>
+                <p>色相几乎相同，主要靠明度深浅拉开层次。统一感极强，适合极简风与情绪化表达；若担心单调，就在明度与纯度上做文章。</p>
+
+                <figure class="figure">
+                    <img src="images/color_theory_05.webp" alt="邻近色与同类色对比说明" loading="lazy" />
+                </figure>
+                <p class="caption">邻近色 vs 同类色：60° 与 15° 的微妙差别</p>
+            </section>
+
+            <section>
+                <h2>四种配色思路，怎么用才不翻车</h2>
+                <p>理论落到手上，常用的就这几招。每种都有优点、也有坑，知道怎么「救场」，配色才真正好用。</p>
+                <div class="tip-grid">
+                    <div class="tip" style="--tip-color:#f4a261">
+                        <strong>同类色搭配</strong>
+                        <span>优点：和谐统一。缺点：易显单调。解法：拉开明度与纯度，注意面积比例，让主色在画面中有所呼应。</span>
+                    </div>
+                    <div class="tip" style="--tip-color:#2a9d8f">
+                        <strong>邻近色搭配</strong>
+                        <span>优点：优雅协调。缺点：刺激感不足。解法：同样用明暗、纯度对比，让主次分明。</span>
+                    </div>
+                    <div class="tip" style="--tip-color:#e9c46a">
+                        <strong>对比色搭配</strong>
+                        <span>优点：醒目活泼。缺点：易乱、易腻。解法：降低辅色饱和度、缩小辅色面积，或用黑白间隔。</span>
+                    </div>
+                    <div class="tip" style="--tip-color:#e85d4c">
+                        <strong>互补色搭配</strong>
+                        <span>优点：强烈有力。缺点：易显稚气或疲劳。解法：同对比色——控纯度、控面积、加中性色缓冲。</span>
+                    </div>
+                </div>
+            </section>
+
+            <section>
+                <h2>给颜色起个好听的名字</h2>
+                <p>同是「绿」，也可以是薄荷绿、典雅绿、碧波绿、生机绿、翡翠绿、墨绿……名字一变，气质就变。学色彩，不只是记角度与公式，更是学会感受每一种颜色背后的情绪与故事。</p>
+                <p>下次选色时，不妨先问自己三个问题：<strong>想要什么情绪？冷还是暖？统一还是对比？</strong>答案清楚了，色相环上的那一笔，也就有了方向。</p>
+            </section>
+
+            <section class="outro">
+                <p class="closing">颜色是设计的呼吸，也是情绪的温度计。</p>
+                <p>从今天起，把色相环装进心里——配色，其实没有那么难。</p>
+            </section>
+        </article>
+    </div>
+
+    <script>
+        (function () {
+            var sections = document.querySelectorAll("article section");
+            if (!("IntersectionObserver" in window)) {
+                sections.forEach(function (s) { s.classList.add("in-view"); });
+                return;
+            }
+            var io = new IntersectionObserver(function (entries) {
+                entries.forEach(function (e) {
+                    if (e.isIntersecting) {
+                        e.target.classList.add("in-view");
+                        io.unobserve(e.target);
+                    }
+                });
+            }, { threshold: 0.12, rootMargin: "0px 0px -40px 0px" });
+            sections.forEach(function (s) { io.observe(s); });
+        })();
+    </script>
+</body>
+</html>
